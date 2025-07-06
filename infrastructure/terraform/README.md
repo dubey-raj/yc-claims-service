@@ -7,6 +7,10 @@ Watch the [live demo](https://www.twitch.tv/videos/2241783900) for a quick tour.
 ## Design
 
 ### Pipeline Components
+1. Update vpc-id in terraform.tfvars
+2. Update sqs arn in ecscluster.tf
+3. Update alb arn in main.tf as shared alb will be used
+
 This code demonstrates how GitHub Actions and Terraform can automate the deployment of your AWS workloads across multiple environments.
 
 ![pipeline-components](img/pipeline.png)

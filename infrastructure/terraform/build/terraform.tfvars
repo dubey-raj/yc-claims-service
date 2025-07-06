@@ -1,4 +1,4 @@
-region = "eu-north-1"
+region = "ap-south-1"
 vpc_id = "vpc-0ed3411bc6ebf5c00"
 Application = "claim-service"
 ArtifactoryRepo = "dubeyraj/claim-service"
