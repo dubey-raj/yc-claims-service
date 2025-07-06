@@ -5,6 +5,7 @@ using ClaimService.Configurations;
 using ClaimService.External.Config;
 using ClaimService.Middlewares;
 using ClaimService.Services;
+using ClaimService.Services.Dashboard;
 using ClaimService.Services.Documents;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -57,6 +58,7 @@ builder.Services.AddAWSService<IAmazonRekognition>();
 builder.Services.AddAWSService<IAmazonSQS>();
 builder.Services.AddScoped<IClaimService, ClaimsService>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IFileUploader>(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();

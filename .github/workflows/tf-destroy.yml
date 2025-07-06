@@ -3,6 +3,11 @@ name: "Destroy environment"
 run-name: Environment Destroyed by ${{ github.actor}}
 on:
   workflow_dispatch:
+    inputs:
+      region:
+        description: 'Region to deploy'
+        required: true
+        default: 'ap-south-1'
 
 permissions:
       id-token: write
@@ -10,7 +15,7 @@ permissions:
       pull-requests: write
 env:
   TF_LOG: INFO
-  AWS_REGION: eu-north-1
+  AWS_REGION: ${{github.event.inputs.region}}
   AWS_BUCKET_NAME: ${{ secrets.TF_STATE_BUCKET_NAME }}
   AWS_BUCKET_KEY_NAME: ${{ secrets.TF_STATE_BUCKET_KEY }}
 
@@ -31,7 +36,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: eu-north-1
+          aws-region: ${{env.AWS_REGION}}
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: GitHub-Actions-OIDC-TERRAFORM 
 
@@ -47,7 +52,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET_NAME }}" -backend-config="key=claim-service/dev/terraform.tfstate" -backend-config="region=eu-north-1" -backend-config="encrypt=true" -backend-config="dynamodb_table=${{ secrets.TF_STATE_DYNAMODB_TABLE }}" -input=false
+        run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET_NAME }}" -backend-config="key=claim-service/dev/terraform.tfstate" -backend-config="region=${{env.AWS_REGION}}" -backend-config="encrypt=true" -backend-config="dynamodb_table=${{ secrets.TF_STATE_DYNAMODB_TABLE }}" -input=false
 
       - name: Terraform Validate
         id: validate

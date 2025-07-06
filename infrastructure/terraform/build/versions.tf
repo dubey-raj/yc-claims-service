@@ -10,13 +10,16 @@ terraform {
 }
 
 provider "aws" {
-  region = var.Region
+  region = var.region
 
   default_tags {
     tags = {
       Environment = var.EnvTag
       Provisioner = "Terraform"
       Solution    = var.SolTag
+      Owner       = "Raj Dubey"
+      Type        = "Demo Assignment"
+      Lifecyle    = "Short"
     }
   }
 }

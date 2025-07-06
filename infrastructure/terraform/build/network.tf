@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "alb-target-group" {
 
 
   tags = {
-    Name  = format("%s-%s-%s-%s", "albtg", var.Application, var.EnvCode, var.Region)
+    Name  = format("%s-%s-%s-%s", "albtg", var.Application, var.EnvCode, var.region)
     rtype = "network"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_alb_listener_rule" "alb_listener_rule" {
     }
   }
   tags = {
-    name  = format("%s-%s-%s-%s", "alb-lr", var.Application, var.EnvCode, var.Region)
+    name  = format("%s-%s-%s-%s", "alb-lr", var.Application, var.EnvCode, var.region)
     rtype = "network"
   }
 }

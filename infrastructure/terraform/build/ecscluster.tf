@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "appkms" {
 
     principals {
       type        = "Service"
-      identifiers = ["logs.${var.Region}.amazonaws.com"]
+      identifiers = ["logs.${var.region}.amazonaws.com"]
     }
     actions = [
       "kms:Encrypt*",
@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "appkms" {
       test     = "ArnLike"
       variable = "kms:EncryptionContext:aws:logs:arn"
       values = [
-        "arn:aws:logs:${var.Region}:${data.aws_caller_identity.current.account_id}:*"
+        "arn:aws:logs:${var.region}:${data.aws_caller_identity.current.account_id}:*"
       ]
     }
   }
@@ -70,12 +70,12 @@ resource "aws_kms_alias" "kms_alias" {
 
 # Create CloudWatch log group for ECS logs 
 resource "aws_cloudwatch_log_group" "ecscluster_logs" {
-  name              = format("%s/%s/%s", "ecscluster", var.Application, var.Region)
+  name              = format("%s/%s/%s", "ecscluster", var.Application, var.region)
   retention_in_days = 1
   kms_key_id        = aws_kms_key.kms_key.arn
 
   tags = {
-    Name         = format("%s/%s/%s", "ecscluster", var.Application, var.Region)
+    Name         = format("%s/%s/%s", "ecscluster", var.Application, var.region)
     resourcetype = "monitor"
     codeblock    = "ecscluster"
   }
@@ -124,7 +124,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 
 # Establish IAM Role with permissions for Amazon ECS to access Amazon ECR for image pulling and CloudWatch for logging
 resource "aws_iam_role" "ecstaskexec" {
-  name = format("%s-%s-%s", "ecstaskexec", var.Application, var.Region)
+  name = format("%s-%s-%s", "ecstaskexec", var.Application, var.region)
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -139,13 +139,13 @@ resource "aws_iam_role" "ecstaskexec" {
   })
 
   tags = {
-    Name  = format("%s-%s-%s", "ecstaskexec", var.Application, var.Region)
+    Name  = format("%s-%s-%s", "ecstaskexec", var.Application, var.region)
     rtype = "security"
   }
 }
 
 resource "aws_iam_role_policy" "ecstaskexecaccess" {
-  name = format("%s-%s-%s", "ecstaskexec", var.Application, var.Region)
+  name = format("%s-%s-%s", "ecstaskexec", var.Application, var.region)
   role = aws_iam_role.ecstaskexec.id
   policy = jsonencode({
     Version = "2012-10-17"

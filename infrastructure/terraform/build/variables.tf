@@ -1,5 +1,5 @@
 # Regions
-variable "Region" {
+variable "region" {
   description = "AWS depoloyment region"
   type        = string
 }

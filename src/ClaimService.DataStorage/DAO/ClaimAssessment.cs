@@ -9,8 +9,8 @@ public partial class ClaimAssessment
 
     public long ClaimId { get; set; }
 
-    public long InspectorId { get; set; }
-    public long ManagerId { get; set; }
+    public long? InspectorId { get; set; }
+    public long? ManagerId { get; set; }
 
     public DateOnly? InspectionDate { get; set; }
 
